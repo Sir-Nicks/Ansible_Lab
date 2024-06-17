@@ -1,0 +1,36 @@
+---
+- name: Install and start Apache
+  hosts: all
+  become: yes # Run task with root privileges
+
+  tasks:
+    - name: Update package list on Ubuntu
+      when: ansible_os_family == 'Debian'
+      apt:
+        update_cache: yes
+
+    - name: Install Apache on Red Hat
+      when: ansible_os_family == 'RedHat' # Only execute this task on Red Hat-based systems
+      package:
+        name: httpd # Package name for Apache on Red Hat
+        state: present # Ensure the package is installed
+
+    - name: Install Apache on Ubuntu
+      when: ansible_os_family == 'Debian' # Only execute this task on Debian-based systems
+      apt:
+        name: apache2 # Package name for Apache on Ubuntu
+        state: present # Ensure the package is installed
+
+    - name: Start Apache service on Red Hat
+      when: ansible_os_family == 'RedHat'
+      service:
+        name: httpd # Service name for Apache on Red Hat
+        state: started # Ensure the service is running
+        enabled: yes # Ensure the service is enabled to start on boot
+
+    - name: Start Apache service on Ubuntu
+      when: ansible_os_family == 'Debian'
+      service:
+        name: apache2 # Service name for Apache on Ubuntu
+        state: started # Ensure the service is running
+        enabled: yes # Ensure the service is enabled to start on boot

@@ -1,0 +1,10 @@
+variable "cidr" {}
+variable "cidr2_1" {}
+variable "cidr2_2" {}
+variable "cidr3_1" {}
+variable "cidr3_2" {}
+variable "all_cidr" {}
+variable "ubuntu" {}
+variable "redhat" {}
+variable "path_to_keypair" {}
+variable "private_key_path" {}
